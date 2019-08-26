@@ -19,11 +19,7 @@ func AnonymousRegister(router *gin.RouterGroup) {
 }
 
 func ArticleCreate(c *gin.Context) {
-	fmt.Println("ArticleCreate start", c.Request.Method)
-	buf := make([]byte, 2048)
-	n, _ := c.Request.Body.Read(buf)
-	b := string(buf[0:n])
-	fmt.Println(b)
+	fmt.Println("ArticleCreate start", c.Request.Method, c.ContentType())
 
 	articleModelValidator := NewArticleModelValidator()
 	if err := articleModelValidator.Bind(c); err != nil {
@@ -31,6 +27,7 @@ func ArticleCreate(c *gin.Context) {
 		c.JSON(http.StatusUnprocessableEntity, common.NewValidatorError(err))
 		return
 	}
+	fmt.Println("success", articleModelValidator)
 	//fmt.Println(articleModelValidator.articleModel.Author.UserModel)
 
 	if err := SaveOne(&articleModelValidator.articleModel); err != nil {
