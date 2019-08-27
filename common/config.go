@@ -20,6 +20,11 @@ type ConfiglistWeb struct {
 	Port string
 }
 
+// ConfigConst include constract
+type ConfigConst struct {
+	NBSecretPassword string
+	NBRandomPassword string
+}
 // Conf object
 var Conf *ini.File
 
@@ -46,6 +51,13 @@ func getDBConf() *ConfigListDB {
 func getWebConf() *ConfiglistWeb{
 	return &ConfiglistWeb{
 		Port:    Conf.Section("web").Key("port").String(),
+	}
+}
+
+func getConst() *ConfigConst{
+	return &ConfigConst{
+		NBSecretPassword:    Conf.Section("const").Key("NBSecretPassword").String(),
+		NBRandomPassword:    Conf.Section("const").Key("NBRandomPassword").String(),
 	}
 }
 

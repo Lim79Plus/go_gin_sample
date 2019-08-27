@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/Lim79Plus/go_gin_sample/articles"
+	"github.com/Lim79Plus/go_gin_sample/users"
 	"github.com/Lim79Plus/go_gin_sample/common"
 	"github.com/Lim79Plus/go_gin_sample/hello"
 	"github.com/gin-gonic/gin"
@@ -13,6 +14,7 @@ func Migrate(db *gorm.DB) {
 	// AutoMigrate will ONLY create tables, missing columns and missing indexes,
 	// and WON'T change existing column's type or delete unused columns to protect your data.
 	db.AutoMigrate(&articles.ArticleModel{})
+	db.AutoMigrate(&users.UserModel{})
 }
 
 func main() {
