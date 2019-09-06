@@ -2,12 +2,27 @@ package common
 
 import (
 	"fmt"
+	"time"
 
+	jwt "github.com/dgrijalva/jwt-go"
 	"gopkg.in/go-playground/validator.v8"
 
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
 )
+
+// GenToken return crypted Token
+func GenToken(id uint) string {
+	jwtToken := jwt.New(jwt.GetSigningMethod("HS256"))
+	// Set some claims
+	jwtToken.Claims = jwt.MapClaims{
+		"id":  id,
+		"exp": time.Now().Add(time.Hour * 24).Unix(),
+	}
+	// Sign and get the complete encoded token as a string
+	token, _ := jwtToken.SignedString([]byte(GetNB().NBSecretPassword))
+	return token
+}
 
 // CommonError My own Error type that will help return my customized Error info
 //  {"database": {"hello":"no such table", error: "not_exists"}}
@@ -20,6 +35,7 @@ type CommonError struct {
 func NewValidatorError(err error) CommonError {
 	res := CommonError{}
 	res.Errors = make(map[string]interface{})
+	fmt.Println("NewValidatorError err", &err)
 	errs := err.(validator.ValidationErrors)
 	for _, v := range errs {
 		// can translate each error one at a time.
@@ -49,4 +65,3 @@ func Bind(c *gin.Context, obj interface{}) error {
 	b := binding.Default(c.Request.Method, c.ContentType())
 	return c.ShouldBindWith(obj, b)
 }
-

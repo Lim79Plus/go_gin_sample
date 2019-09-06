@@ -1,6 +1,11 @@
-pakcage users
+package users
 
-import "github.com/Lim79Plus/go_gin_sample/common"
+import (
+	"fmt"
+
+	"github.com/Lim79Plus/go_gin_sample/common"
+	"github.com/gin-gonic/gin"
+)
 
 // UserModelValidator struct
 type UserModelValidator struct {
@@ -21,20 +26,22 @@ func NewUserModelValidator() UserModelValidator {
 }
 
 // Bind UserModelValidator
-func (self *UserModelValidator) Bind(c *gin.Context) error {
-	err := common.Bind(c, self)
+func (validate *UserModelValidator) Bind(c *gin.Context) error {
+	fmt.Println("UserModelValidator Bind")
+	err := common.Bind(c, validate)
 	if err != nil {
+		fmt.Println("UserModelValidator Bind err", err)
 		return err
 	}
-	self.userModel.Username = self.User.Username
-	self.userModel.Email = self.User.Email
-	self.userModel.Bio = self.User.Bio
+	validate.userModel.Username = validate.User.Username
+	validate.userModel.Email = validate.User.Email
+	validate.userModel.Bio = validate.User.Bio
 
-	if self.User.Password != common.getConst().NBRandomPassword {
-		self.userModel.setPassword(self.User.Password)
+	if validate.User.Password != common.GetNB().NBRandomPassword {
+		validate.userModel.setPassword(validate.User.Password)
 	}
-	if self.User.Image != "" {
-		self.userModel.Image = &self.User.Image
+	if validate.User.Image != "" {
+		validate.userModel.Image = &validate.User.Image
 	}
 	return nil
 }

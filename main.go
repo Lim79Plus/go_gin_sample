@@ -2,9 +2,9 @@ package main
 
 import (
 	"github.com/Lim79Plus/go_gin_sample/articles"
-	"github.com/Lim79Plus/go_gin_sample/users"
 	"github.com/Lim79Plus/go_gin_sample/common"
 	"github.com/Lim79Plus/go_gin_sample/hello"
+	"github.com/Lim79Plus/go_gin_sample/users"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
 )
@@ -28,6 +28,7 @@ func main() {
 	hello.HelloWorld(testPage.Group("/world"))
 
 	v1 := r.Group("/api")
+	users.Register(v1.Group("/register"))
 	articles.AnonymousRegister(v1.Group("/articles"))
 	articles.ArticlesRegister(v1.Group("/articles"))
 

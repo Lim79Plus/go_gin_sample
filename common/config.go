@@ -1,7 +1,10 @@
 package common
 
-import "github.com/go-ini/ini"
-import "fmt"
+import (
+	"fmt"
+
+	"github.com/go-ini/ini"
+)
 
 var confname = "config.ini"
 
@@ -15,7 +18,7 @@ type ConfigListDB struct {
 	DBUser    string
 }
 
-// ConfiglistWeb include web 
+// ConfiglistWeb include web
 type ConfiglistWeb struct {
 	Port string
 }
@@ -25,13 +28,14 @@ type ConfigConst struct {
 	NBSecretPassword string
 	NBRandomPassword string
 }
+
 // Conf object
 var Conf *ini.File
 
 // InitConf generater
-func InitConf(){
+func InitConf() {
 	cfg, err := ini.Load(confname)
-	if err != nil{
+	if err != nil {
 		panic(err)
 	}
 	Conf = cfg
@@ -48,28 +52,35 @@ func getDBConf() *ConfigListDB {
 	}
 }
 
-func getWebConf() *ConfiglistWeb{
+func getWebConf() *ConfiglistWeb {
 	return &ConfiglistWeb{
-		Port:    Conf.Section("web").Key("port").String(),
+		Port: Conf.Section("web").Key("port").String(),
 	}
 }
 
-func getConst() *ConfigConst{
+func getNB() *ConfigConst {
 	return &ConfigConst{
-		NBSecretPassword:    Conf.Section("const").Key("NBSecretPassword").String(),
-		NBRandomPassword:    Conf.Section("const").Key("NBRandomPassword").String(),
+		NBSecretPassword: Conf.Section("const").Key("NBSecretPassword").String(),
+		NBRandomPassword: Conf.Section("const").Key("NBRandomPassword").String(),
 	}
+}
+
+// GetNB return password and random
+func GetNB() *ConfigConst {
+	c := getNB()
+	return c
 }
 
 // GetWebPort return web server port
-func GetWebPort() string{
+func GetWebPort() string {
 	c := getWebConf()
 	return ":" + c.Port
 }
+
 // GetConnectInfo return db info (dbms, connect info)
 func GetConnectInfo() (string, string) {
 	c := getDBConf()
-	fmt.Println("c",c)
+	fmt.Println("c", c)
 	DBMS := c.SQLDriver
 	USER := c.DBUser
 	PASS := c.DBPass
