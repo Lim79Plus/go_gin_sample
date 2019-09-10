@@ -45,3 +45,29 @@ func (validate *UserModelValidator) Bind(c *gin.Context) error {
 	}
 	return nil
 }
+
+// LoginValidator validate users login request
+type LoginValidator struct {
+	User struct {
+		Email    string `form:"email" json:"email" binding:"exists,email"`
+		Password string `form:"password" json:"password" binding:"exists,min=8,max=255"`
+	} `json:"user"`
+	userModel UserModel `json:"-"`
+}
+
+// NewLoginValidator return loginValidator struct
+func NewLoginValidator() LoginValidator {
+	loginValidator := LoginValidator{}
+	return loginValidator
+}
+
+// Bind for LoginValidator
+func (validator *LoginValidator) Bind(c *gin.Context) error {
+	err := common.Bind(c, validator)
+	if err != nil {
+		return err
+	}
+
+	validator.userModel.Email = validator.User.Email
+	return nil
+}
