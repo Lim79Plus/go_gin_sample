@@ -29,6 +29,7 @@ func main() {
 
 	v1 := r.Group("/api")
 	users.Register(v1.Group("/register"))
+	users.Login(v1.Group("/login"))
 	articles.AnonymousRegister(v1.Group("/articles"))
 	articles.ArticlesRegister(v1.Group("/articles"))
 
