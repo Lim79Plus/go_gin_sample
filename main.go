@@ -3,7 +3,7 @@ package main
 import (
 	"github.com/Lim79Plus/go_gin_sample/articles"
 	"github.com/Lim79Plus/go_gin_sample/common"
-	"github.com/Lim79Plus/go_gin_sample/hello"
+	"github.com/Lim79Plus/go_gin_sample/logger"
 	"github.com/Lim79Plus/go_gin_sample/users"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
@@ -18,14 +18,20 @@ func Migrate(db *gorm.DB) {
 }
 
 func main() {
+	// logger setting
+	logger.LogInit()
+
+	// config setting
 	common.InitConf()
+
+	// // db setting
 	db := common.Init()
 	Migrate(db)
 	defer db.Close()
 
 	r := gin.Default()
-	testPage := r.Group("/hello")
-	hello.HelloWorld(testPage.Group("/world"))
+	// testPage := r.Group("/hello")
+	// hello.HelloWorld(testPage.Group("/world"))
 
 	v1 := r.Group("/api")
 	users.Register(v1.Group("/register"))
@@ -33,7 +39,7 @@ func main() {
 	articles.AnonymousRegister(v1.Group("/articles"))
 	articles.ArticlesRegister(v1.Group("/articles"))
 
-	// start server
+	// // start server
 	r.Run(common.GetWebPort())
 }
 
