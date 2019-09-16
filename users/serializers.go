@@ -1,6 +1,10 @@
 package users
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/Lim79Plus/go_gin_sample/common"
+	"github.com/Lim79Plus/go_gin_sample/logger"
+	"github.com/gin-gonic/gin"
+)
 
 // UserSerializer return gin.Context
 type UserSerializer struct {
@@ -24,7 +28,8 @@ func (serialize *UserSerializer) Response() UserResponse {
 		Email:    myUserModel.Email,
 		Bio:      myUserModel.Bio,
 		Image:    myUserModel.Image,
-		// Token:    common.GenToken(myUserModel.ID),
+		Token:    common.GenToken(myUserModel.ID),
 	}
+	logger.Trace("UserSerializer.Response()", user)
 	return user
 }
