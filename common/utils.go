@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/Lim79Plus/go_gin_sample/logger"
 	jwt "github.com/dgrijalva/jwt-go"
 	"gopkg.in/go-playground/validator.v8"
 
@@ -21,6 +22,7 @@ func GenToken(id uint) string {
 	}
 	// Sign and get the complete encoded token as a string
 	token, _ := jwtToken.SignedString([]byte(GetNB().NBSecretPassword))
+	logger.Trace("GenToken.token", token)
 	return token
 }
 
