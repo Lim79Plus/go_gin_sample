@@ -24,7 +24,7 @@ func main() {
 	// config setting
 	common.InitConf()
 
-	// // db setting
+	// db setting
 	db := common.Init()
 	Migrate(db)
 	defer db.Close()
@@ -36,10 +36,15 @@ func main() {
 	v1 := r.Group("/api")
 	users.Register(v1.Group("/register"))
 	users.Login(v1.Group("/login"))
+	v1.Use(users.AuthMiddleware(false))
 	articles.AnonymousRegister(v1.Group("/articles"))
 	articles.ArticlesRegister(v1.Group("/articles"))
 
-	// // start server
+	// following route
+	v1.Use(users.AuthMiddleware(true))
+	users.UserRegister(v1.Group("/user"))
+
+	// start server
 	r.Run(common.GetWebPort())
 }
 
