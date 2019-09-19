@@ -35,6 +35,7 @@ go run *.go
 ## APIの呼び出し
 
 ※ローカルでの実行時
+※sampleData直下のJsonファイル
 ```
 // 記事一覧 
 curl -X GET localhost:8080/api/articles/
