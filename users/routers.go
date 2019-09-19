@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/Lim79Plus/go_gin_sample/common"
+	"github.com/Lim79Plus/go_gin_sample/logger"
 	"github.com/gin-gonic/gin"
 )
 
@@ -17,6 +18,17 @@ func Register(router *gin.RouterGroup) {
 // Login to the site
 func Login(router *gin.RouterGroup) {
 	router.POST("/", login)
+}
+
+// UserRegister login user route
+func UserRegister(router *gin.RouterGroup) {
+	router.GET("/", UserRetrieve)
+}
+
+// UserRetrieve get user info
+func UserRetrieve(c *gin.Context) {
+	logger.Trace("users.UserRetrieve()")
+	c.JSON(http.StatusAccepted, gin.H{"access": "ok"})
 }
 
 // Registration create new user account
