@@ -2,7 +2,6 @@ package users
 
 import (
 	"errors"
-	"fmt"
 	"net/http"
 
 	"github.com/Lim79Plus/go_gin_sample/common"
@@ -33,10 +32,10 @@ func UserRetrieve(c *gin.Context) {
 
 // Registration create new user account
 func Registration(c *gin.Context) {
-	fmt.Println("user Registration start", c.Request.Method, c.ContentType())
+	logger.Trace("user Registration start", c.Request.Method, c.ContentType())
 	userModelValidator := NewUserModelValidator()
 	if err := userModelValidator.Bind(c); err != nil {
-		fmt.Println("user Registration err happend", err)
+		logger.Trace("user Registration err happend", err)
 		c.JSON(http.StatusUnprocessableEntity, common.NewValidatorError(err))
 		return
 	}

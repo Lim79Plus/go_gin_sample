@@ -1,9 +1,8 @@
 package users
 
 import (
-	"fmt"
-
 	"github.com/Lim79Plus/go_gin_sample/common"
+	"github.com/Lim79Plus/go_gin_sample/logger"
 	"github.com/gin-gonic/gin"
 )
 
@@ -27,10 +26,10 @@ func NewUserModelValidator() UserModelValidator {
 
 // Bind UserModelValidator
 func (validate *UserModelValidator) Bind(c *gin.Context) error {
-	fmt.Println("UserModelValidator Bind")
+	logger.Trace("UserModelValidator Bind")
 	err := common.Bind(c, validate)
 	if err != nil {
-		fmt.Println("UserModelValidator Bind err", err)
+		logger.Trace("UserModelValidator Bind err", err)
 		return err
 	}
 	validate.userModel.Username = validate.User.Username
