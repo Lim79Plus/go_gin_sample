@@ -85,8 +85,9 @@ func GetConnectInfo() (string, string) {
 	PASS := c.DBPass
 	PROTOCOL := "tcp(" + c.DBAddress + ":" + c.DBPort + ")"
 	DBNAME := c.DBName
+	PARSETIME := "parseTime=True"
 	OPTION := "charset=utf8"
 
-	CONNECT := USER + ":" + PASS + "@" + PROTOCOL + "/" + DBNAME + "?" + OPTION
+	CONNECT := USER + ":" + PASS + "@" + PROTOCOL + "/" + DBNAME + "?" + OPTION + "&" + PARSETIME
 	return DBMS, CONNECT
 }
