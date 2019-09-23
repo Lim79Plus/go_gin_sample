@@ -1,8 +1,7 @@
 package common
 
 import (
-	"fmt"
-
+	"github.com/Lim79Plus/go_gin_sample/logger"
 	"github.com/go-ini/ini"
 )
 
@@ -80,7 +79,7 @@ func GetWebPort() string {
 // GetConnectInfo return db info (dbms, connect info)
 func GetConnectInfo() (string, string) {
 	c := getDBConf()
-	fmt.Println("c", c)
+	logger.Trace("c", c)
 	DBMS := c.SQLDriver
 	USER := c.DBUser
 	PASS := c.DBPass

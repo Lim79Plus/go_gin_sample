@@ -1,8 +1,7 @@
 package common
 
 import (
-	"fmt"
-
+	"github.com/Lim79Plus/go_gin_sample/logger"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
@@ -18,7 +17,7 @@ var DB *gorm.DB
 // Init initialize db instance
 func Init() *gorm.DB {
 	DBMS, CONNECT := GetConnectInfo()
-	fmt.Println("gormConnect CONNECT", CONNECT)
+	logger.Trace("gormConnect CONNECT", CONNECT)
 	db, err := gorm.Open(DBMS, CONNECT)
 
 	if err != nil {

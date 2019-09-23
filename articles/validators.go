@@ -1,9 +1,8 @@
 package articles
 
 import (
-	"fmt"
-
 	"github.com/Lim79Plus/go_gin_sample/common"
+	"github.com/Lim79Plus/go_gin_sample/logger"
 	"github.com/gin-gonic/gin"
 	"github.com/gosimple/slug"
 )
@@ -26,7 +25,7 @@ func NewArticleModelValidator() ArticleModelValidator {
 // Bind bind article
 func (s *ArticleModelValidator) Bind(c *gin.Context) error {
 	// myUserModel := c.MustGet("my_user_model").(users.UserModel)
-	fmt.Println("ArticleModelValidator Bind")
+	logger.Trace("ArticleModelValidator Bind")
 	err := common.Bind(c, s)
 	if err != nil {
 		return err

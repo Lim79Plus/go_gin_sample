@@ -1,14 +1,15 @@
 package articles
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/Lim79Plus/go_gin_sample/common"
+	"github.com/Lim79Plus/go_gin_sample/logger"
 	"github.com/gin-gonic/gin"
 )
 
-func ArticlesRegister(router *gin.RouterGroup) {
+// Register for login user
+func Register(router *gin.RouterGroup) {
 	router.POST("/", ArticleCreate)
 }
 
@@ -19,16 +20,16 @@ func AnonymousRegister(router *gin.RouterGroup) {
 }
 
 func ArticleCreate(c *gin.Context) {
-	fmt.Println("ArticleCreate start", c.Request.Method, c.ContentType())
+	logger.Trace("ArticleCreate start", c.Request.Method, c.ContentType())
 
 	articleModelValidator := NewArticleModelValidator()
 	if err := articleModelValidator.Bind(c); err != nil {
-		fmt.Println("ArticleCreate err happend", err)
+		logger.Trace("ArticleCreate err happend", err)
 		c.JSON(http.StatusUnprocessableEntity, common.NewValidatorError(err))
 		return
 	}
-	fmt.Println("success", articleModelValidator)
-	//fmt.Println(articleModelValidator.articleModel.Author.UserModel)
+	logger.Trace("success", articleModelValidator)
+	//logger.Trace(articleModelValidator.articleModel.Author.UserModel)
 
 	if err := SaveOne(&articleModelValidator.articleModel); err != nil {
 		c.JSON(http.StatusUnprocessableEntity, common.NewError("database", err))

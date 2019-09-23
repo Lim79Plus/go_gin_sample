@@ -37,11 +37,11 @@ type CommonError struct {
 func NewValidatorError(err error) CommonError {
 	res := CommonError{}
 	res.Errors = make(map[string]interface{})
-	fmt.Println("NewValidatorError err", &err)
+	logger.Trace("NewValidatorError err", &err)
 	errs := err.(validator.ValidationErrors)
 	for _, v := range errs {
 		// can translate each error one at a time.
-		//fmt.Println("gg",v.NameNamespace)
+		//logger.Trace("gg",v.NameNamespace)
 		if v.Param != "" {
 			res.Errors[v.Field] = fmt.Sprintf("{%v: %v}", v.Tag, v.Param)
 		} else {
@@ -63,7 +63,7 @@ func NewError(key string, err error) CommonError {
 // Bind auto return 400 when error happened.
 // origin function is here: https://github.com/gin-gonic/gin/blob/master/context.go
 func Bind(c *gin.Context, obj interface{}) error {
-	fmt.Println("Bind", c.Request.Method, c.ContentType())
+	logger.Trace("Bind", c.Request.Method, c.ContentType())
 	b := binding.Default(c.Request.Method, c.ContentType())
 	return c.ShouldBindWith(obj, b)
 }
