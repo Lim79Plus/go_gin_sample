@@ -5,7 +5,8 @@ import (
 	"github.com/go-ini/ini"
 )
 
-var confname = "config.ini"
+// ConfName config file name
+var ConfName = "config.ini"
 
 // ConfigListDB include db
 type ConfigListDB struct {
@@ -33,7 +34,7 @@ var Conf *ini.File
 
 // InitConf generater
 func InitConf() {
-	cfg, err := ini.Load(confname)
+	cfg, err := ini.Load(ConfName)
 	if err != nil {
 		panic(err)
 	}

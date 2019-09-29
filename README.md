@@ -40,9 +40,6 @@ go run *.go
 // 記事一覧 
 curl -X GET localhost:8080/api/articles/
 
-// 記事投稿
-curl -X POST -H 'Content-Type:application/json' -d @newAirticle.json localhost:8080/api/articles/
-
 // ユーザ登録_レスポンスにJWT Token
 curl -X POST -H 'Content-Type:application/json' -d @newUser.json localhost:8080/api/register/
 
@@ -55,4 +52,8 @@ JWTの動作確認
 ```
 // ログインユーザのみ
 curl -X GET -H "Authorization:  <jwt token>" "localhost:8080/api/user/" 
+
+// 記事の投稿
+curl -X POST -H "Authorization:  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjkwNjM0NzUsImlkIjoxfQ.OWJ3GwqzJcH18cCv_5cBp1w9ObOM0zV_2ok-Dmv_D2Q" -H 'Content-Type:application/json' -d @newAirticle.json localhost:8080/api/articles/
+
 ```

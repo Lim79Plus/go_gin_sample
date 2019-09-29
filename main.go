@@ -17,12 +17,19 @@ func Migrate(db *gorm.DB) {
 	db.AutoMigrate(&users.UserModel{})
 }
 
-func main() {
+// Init set initialization
+func Init() {
 	// logger setting
 	logger.LogInit()
 
 	// config setting
 	common.InitConf()
+
+}
+
+func main() {
+
+	Init()
 
 	// db setting
 	db := common.Init()
@@ -38,11 +45,11 @@ func main() {
 	users.Login(v1.Group("/login"))
 	v1.Use(users.AuthMiddleware(false))
 	articles.AnonymousRegister(v1.Group("/articles"))
-	articles.ArticlesRegister(v1.Group("/articles"))
 
 	// following route
 	v1.Use(users.AuthMiddleware(true))
 	users.UserRegister(v1.Group("/user"))
+	articles.Register(v1.Group("/articles"))
 
 	// start server
 	r.Run(common.GetWebPort())

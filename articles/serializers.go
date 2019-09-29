@@ -1,6 +1,8 @@
 package articles
 
 import (
+	"time"
+
 	"github.com/gin-gonic/gin"
 	"github.com/gosimple/slug"
 )
@@ -38,9 +40,10 @@ func (s *ArticleSerializer) Response() ArticleListResponse {
 		Title:       s.Title,
 		Description: s.Description,
 		Body:        s.Body,
-		CreatedAt:   s.CreatedAt.UTC().Format("2006-01-02T15:04:05.999Z"),
-		//UpdatedAt:      s.UpdatedAt.UTC().Format(time.RFC3339Nano),
-		UpdatedAt: s.UpdatedAt.UTC().Format("2006-01-02T15:04:05.999Z"),
+		CreatedAt:   s.CreatedAt.UTC().Format(time.RFC3339),
+		// CreatedAt: s.CreatedAt.String(),
+		UpdatedAt: s.UpdatedAt.UTC().Format(time.RFC3339),
+		// UpdatedAt: s.UpdatedAt.String(),
 		// Author:         authorSerializer.Response(),
 		// Favorite:       s.isFavoriteBy(GetArticleUserModel(myUserModel)),
 		// FavoritesCount: s.favoritesCount(),
@@ -53,6 +56,7 @@ func (s *ArticleSerializer) Response() ArticleListResponse {
 	return response
 }
 
+// Response for Articles
 func (s *ArticleListSerializer) Response() []ArticleListResponse {
 	response := []ArticleListResponse{}
 	for _, article := range s.Articles {
@@ -61,4 +65,3 @@ func (s *ArticleListSerializer) Response() []ArticleListResponse {
 	}
 	return response
 }
-
