@@ -41,7 +41,7 @@ func NewValidatorError(err error) CommonError {
 	errs := err.(validator.ValidationErrors)
 	for _, v := range errs {
 		// can translate each error one at a time.
-		//logger.Trace("gg",v.NameNamespace)
+		logger.Trace("gg", v.NameNamespace)
 		if v.Param != "" {
 			res.Errors[v.Field] = fmt.Sprintf("{%v: %v}", v.Tag, v.Param)
 		} else {
