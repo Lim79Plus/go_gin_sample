@@ -19,6 +19,7 @@ func AnonymousRegister(router *gin.RouterGroup) {
 	router.GET("/:slug", ArticleRetrieve)
 }
 
+// ArticleCreate register
 func ArticleCreate(c *gin.Context) {
 	logger.Trace("ArticleCreate start", c.Request.Method, c.ContentType())
 
@@ -54,9 +55,11 @@ func ArticleList(c *gin.Context) {
 	// 	return
 	// }
 	serializer := ArticleListSerializer{c, articleModels}
+	logger.Trace("ArticleList serializer", serializer)
 	c.JSON(http.StatusOK, gin.H{"articles": serializer.Response(), "articlesCount": modelCount})
 }
 
+// ArticleRetrieve retreve one article
 func ArticleRetrieve(c *gin.Context) {
 	slug := c.Param("slug")
 	// if slug == "feed" {
